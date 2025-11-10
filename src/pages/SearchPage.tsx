@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchResults } from "../thunks/animeThunks";
 import Loading from "../components/Loading";
 import CardMain from "../components/CardMain";
+import type { AnimeFullList } from "../types/types";
 
 function SearchPage() {
   const { data, loading, error, pagination } = useSelector(
@@ -82,7 +83,7 @@ function SearchPage() {
                 </div>
               ))}
 
-            {data?.map((anime) => (
+            {data?.map((anime: AnimeFullList["data"][0]) => (
               <CardMain anime={anime} key={anime.mal_id} />
             ))}
           </div>

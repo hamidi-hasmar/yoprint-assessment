@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
-import type { AnimeDetail } from "../types/types";
+import type { AnimeFullList } from "../types/types";
 
 export interface CardMainProps {
-  anime: AnimeDetail;
+  anime: AnimeFullList["data"][0];
 }
 
 function CardMain({ anime }: CardMainProps) {
