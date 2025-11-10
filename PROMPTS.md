@@ -9,3 +9,6 @@
 
 - prompt: skeleton loading component
     - to show loading component while fetching data with skeleton of the page with tailwindcss
+
+- deployment to netlify
+    - steps and configuration for running react vite app on netlify

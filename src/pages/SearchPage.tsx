@@ -46,14 +46,18 @@ function SearchPage() {
   const handleNextPage = () => {
     if (pagination?.has_next_page) {
       setPage((prev) => prev + 1);
-      window.scrollTo(0, 0);
+      if (!loading) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
   };
 
   const handlePrevPage = () => {
     if (page > 1) {
       setPage((prev) => prev - 1);
-      window.scrollTo(0, 0);
+      if (!loading) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
     }
   };
 
@@ -73,23 +77,29 @@ function SearchPage() {
           </div>
 
           <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-5 gap-4">
-            {loading &&
-              Array.from({ length: 10 }).map((_, idx) => (
-                <div
-                  key={idx}
-                  className="border-2 border-gray-100 shadow-lg rounded-lg p-4 bg-white animate-pulse"
-                >
-                  <Loading />
-                </div>
-              ))}
 
-            {data?.map((anime: AnimeFullList["data"][0]) => (
-              <CardMain anime={anime} key={anime.mal_id} />
-            ))}
+            {loading
+              ? Array.from({ length: 10 }).map((_, idx) => (
+                  <div
+                    key={idx}
+                    className="border-2 border-gray-100 shadow-lg rounded-lg p-4 bg-white animate-pulse"
+                  >
+                    <Loading />
+                  </div>
+                ))
+              : data?.map((anime: AnimeFullList["data"][0]) => (
+                  <CardMain anime={anime} key={anime.mal_id} />
+                ))}
+
+            {(data?.length ?? 0) === 0 && (
+              <div className="flex justify-center items-center">
+                <p className="text-gray-500">No results found</p>
+              </div>
+            )}
           </div>
         </div>
       </div>
-      {pagination?.last_visible_page && (
+      {pagination?.last_visible_page && (data?.length ?? 0) !== 0 && (
         <div className="flex justify-center gap-4 my-4">
           <button
             onClick={handlePrevPage}
